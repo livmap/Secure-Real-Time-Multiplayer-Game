@@ -13,6 +13,11 @@ class Player {
     return dist
   }
 
+  sortDescending(arr) {
+    // Use the sort method with a compare function
+    return arr.sort((a, b) => b - a);
+  }
+
   movePlayer(dir, speed) {
 
     if(dir == 'UP'){
@@ -34,8 +39,19 @@ class Player {
   }
 
   calculateRank(arr) {
+    const rankedArray = this.sortDescending(arr)
+    const rank = 0
+    for (let i = 0; i < rankedArray.length; i++){
+      if(rankedArray[i].id == this.id ){
+        rank = i + 1
+      }
+    }
 
+    return rank
+    
   }
+
+  
 }
 
 export default Player;

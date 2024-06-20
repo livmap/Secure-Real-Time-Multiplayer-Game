@@ -7,6 +7,7 @@ const cors = require('cors');
 
 const fccTestingRoutes = require('./routes/fcctesting.js');
 const runner = require('./test-runner.js');
+const helmet = require('helmet');
 
 const app = express();
 
@@ -15,6 +16,13 @@ app.use('/assets', express.static(process.cwd() + '/assets'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(helmet.noSniff());
+app.use(helmet.xssFilter());
+app.use(helmet.noCache());
+app.use((req, res, next) => {
+  res.setHeader('X-Powered-By', 'PHP 7.4.3'); // Change 'Your Custom Value' to what you want
+  next();
+});
 
 //For FCC testing purposes and enables user to connect from outside the hosting platform
 app.use(cors({origin: '*'})); 
